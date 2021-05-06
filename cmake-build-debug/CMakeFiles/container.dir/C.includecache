@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/daquan/CLionProjects/container/main.c
+sched.h
+-
+stdio.h
+-
+stdlib.h
+-
+signal.h
+-
+sys/types.h
+-
+sys/wait.h
+-
+unistd.h
+-
+string.h
+-
+sys/types.h
+-
+sys/wait.h
+-
+unistd.h
+-
+unistd.h
+-
+
