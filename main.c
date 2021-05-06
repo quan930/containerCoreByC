@@ -12,12 +12,6 @@
 #include <unistd.h>
 #include <string.h>
 #include "util.h"
-#include <dirent.h>
-#include <sys/stat.h>
-
-//#define FILEP "/root/chroottest9"
-//#define FCONNAME "chroottest9"
-
 
 /**
  * 进入bash
@@ -35,8 +29,6 @@ int spawn_bash(void)
 
 int child(const char *con_name)
 {
-//    printf("pid as seen in the child: %lu\n", (unsigned long)getpid());
-
     //拼接路径
     char filep[100]="/root/";
     strcat(filep,con_name);
@@ -67,7 +59,6 @@ int child(const char *con_name)
 
 int main(int argc, char *argv[])
 {
-    //todo
     if (argc!=3){
         printf("缺少必要参数");
         return 0;
@@ -80,8 +71,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
     printf("当前进程id: %lu\n", (unsigned long)getpid());
-    cgroups_init(p,argv[1]);
-    printf("child pid: %u\n", p);
+    cgroups_init(p,argv[1],argv[2]);//314572800
     waitpid(p, NULL, 0);
     printf("finish .......\n");
     return 0;

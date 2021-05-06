@@ -2,12 +2,8 @@
 // Created by 全 on 2021/5/5.
 //
 
-#include "util.h"
-#include <dirent.h>
-#include <sys/stat.h>
 #include <string.h>
 #include <stdio.h>
-#include <sys/mount.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -28,57 +24,16 @@ void int_to_string(unsigned int N,char arr[]){
     arr[i+1]='\0';
 }
 
-int chroot_init(const char * file_pwd){
-    char arr[128];
-    char arr_temp[7][20]={"","/proc","/sys","/dev","/dev/shm","/dev/pts","/etc"};
-    int res;
-
-    //更改目录
-
-    //todo 创建目录
-    for (int i = 0; i < 7; ++i) {
-        memset(arr, 0, sizeof(arr));
-        strcat(arr,file_pwd);
-        strcat(arr,arr_temp[i]);
-        printf("%s\n",arr);
-        res =  mkdir(file_pwd,S_IRWXU|S_IRWXG|S_IRWXO);
-        if (res!=0){
-            perror("mkdir:");
-        }
-    }
-
-    if (chdir(file_pwd)!=0){
-        perror("chdir:");
-        exit(-1);
-    }
-
-    //todo mount
-
-    res = mount("proc", "/root/chroottest9/proc", "proc", 0, NULL);
-    if (res!=0){
-        perror("mount()");
-    }
-//    res = mount("proc","proc");
-//    printf("mount:res:%d\n",res);
-//
-//
-//    memset(arr, 0, sizeof(arr));
-//    strcat(arr,file_pwd);
-//    strcat(arr,arr_temp[1]);
-//    res = mount("proc",arr);
-//    printf("mount:res:%d\n",res);
-    //mount -t proc proc "$TARGETDIR"/proc
-
-    //todo copy
-}
-
-int cgroups_init(pid_t pid1, const char* con_name){
-    char arr[100]="../cgroupsinit.sh ";
+int cgroups_init(pid_t pid1, const char* con_name,const char* mem_max){
+    //拼接shell 执行命令
+    char arr[256]="../cgroupsinit.sh ";
     strcat(arr,con_name);
     strcat(arr," ");
     char temp[100];
     int_to_string(pid1,temp);
     strcat(arr,temp);
+    strcat(arr," ");
+    strcat(arr,mem_max);
 
     int rv = system(arr);
 
@@ -107,7 +62,6 @@ int cgroups_init(pid_t pid1, const char* con_name){
         return -1;
     }
 }
-
 
 /**
  * 执行shell 执行chroot准备工作相关shell

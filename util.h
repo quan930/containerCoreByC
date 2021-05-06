@@ -8,11 +8,8 @@
 //int 转 string
 void int_to_string(unsigned int N,char arr[]);
 
-//chroot init 创建目录
-int chroot_init(const char * file_pwd);
-
 //cgroups 初始化
-int cgroups_init(pid_t pid1, const char* con_name);
+int cgroups_init(pid_t pid1, const char* con_name,const char* mem_max);
 
 //执行shell 执行chroot准备工作相关shell
 int _exec_shell(char* exec);
