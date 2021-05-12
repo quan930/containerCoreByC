@@ -1,5 +1,6 @@
 # containerCoreByC
 ### 简介
++ [博客地址](https://www.jianshu.com/p/112d2b281282)
 C语言实现容器核心技术
 + 视图隔离-namespaces
 + 资源控制-cgroups
